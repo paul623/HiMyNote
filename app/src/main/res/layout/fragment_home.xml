@@ -21,7 +21,7 @@
                 app:sDividerLineHeight="0dp"
                 android:id="@+id/stv_toolbar"
                 app:sUseRipple="false"
-                app:sLeftTextString="记"
+                app:sLeftTextString="@string/app_name"
                 android:layout_marginEnd="5dp"
                 app:sLeftTextSize="30sp"
                 app:sRightIconHeight="50dp"

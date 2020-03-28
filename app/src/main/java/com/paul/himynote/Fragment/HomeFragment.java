@@ -1,6 +1,9 @@
 package com.paul.himynote.Fragment;
 
 
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
 import android.os.Build;
 
 import android.os.Handler;
@@ -134,8 +137,29 @@ public class HomeFragment extends BaseFragment<MainActivity> {
                 });
             }
         });
+        toolbar.setLeftTextGroupClickListener(new SuperTextView.OnLeftTextGroupClickListener() {
+            @Override
+            public void onClickListener(View view) {
+                createPoster();
+            }
+        });
     }
-
+    private void createPoster() {
+        Toasty.info(me,"生成分享图中...",Toasty.LENGTH_SHORT).show();
+        int width = rootView.getMeasuredWidth();
+        int height = rootView.getMeasuredHeight();
+        /*
+         * Config.RGB_565:每个像素2字节（byte）
+         * ARGB_4444：2字节（已过时）
+         * ARGB_8888:4字节
+         * RGBA_F16：8字节
+         * */
+        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_4444);
+        Canvas canvas = new Canvas(bitmap);
+        canvas.drawColor(Color.WHITE);
+        rootView.draw(canvas);
+        Toasty.success(me,"生成地址:"+ImageHelper.compressImage(me,bitmap).getAbsolutePath(),Toasty.LENGTH_SHORT).show();
+    }
     public void updateBG(String path){
         linearLayout.setBackground(ImageHelper.getByPrivatePath(me,path));
     }

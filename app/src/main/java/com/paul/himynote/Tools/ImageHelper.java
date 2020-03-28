@@ -39,7 +39,7 @@ public class ImageHelper {
      * @param bitmap 这个bitmap不能为null
      * @return File
      * */
-    private static File compressImage(Context context, Bitmap bitmap) {
+    public static File compressImage(Context context, Bitmap bitmap) {
         String filename;
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);//质量压缩方法，这里100表示不压缩，把压缩后的数据存放到baos中
