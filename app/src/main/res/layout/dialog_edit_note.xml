@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <com.allen.library.SuperTextView
+        android:id="@+id/stv_dialog"
+        android:layout_margin="10dp"
+        app:sLeftIconWidth="40dp"
+        app:sLeftIconHeight="40dp"
+        app:sRightIconWidth="40dp"
+        app:sRightIconHeight="40dp"
+        app:sLeftIconRes="@drawable/ic_cancel"
+        app:sRightIconRes="@drawable/ic_confirm"
+        app:sCenterTextString="记"
+        app:sCenterTextSize="30sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <io.github.mthli.knife.KnifeText
+        android:id="@+id/knife"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="16dp"
+        android:paddingLeft="16dp"
+        android:paddingStart="16dp"
+        android:paddingRight="16dp"
+        android:paddingEnd="16dp"
+        android:gravity="top|start"
+        android:scrollbars="vertical"
+        android:background="@android:color/transparent"/>
+
+</LinearLayout>

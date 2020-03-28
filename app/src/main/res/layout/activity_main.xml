@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.paul.himynote.View.WindowInsetsFrameLayout
+        android:id="@+id/frame"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <com.kongzue.tabbar.TabBarView xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/tabbar"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:background="@color/colorWhite"
+        app:focusColor="#3e78ed"
+        app:iconPadding="2dp"
+        app:normalColor="#606060"
+        app:paddingNavigationBar="false"
+        app:tabClickBackground="rippleOutside"
+        app:tabPaddingVertical="5dp"
+        app:textSize="12dp" />
+
+</LinearLayout>

@@ -1,0 +1,2 @@
+rootProject.name='Hi!MyNote'
+include ':app'

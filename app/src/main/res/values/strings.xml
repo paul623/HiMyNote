@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">记</string>
+
+
+    <string name="app_repo">https://github.com/mthli/Knife</string>
+
+    <!-- Menu -->
+    <string name="menu_undo">撤销</string>
+    <string name="menu_redo">重做</string>
+
+    <!-- Dialog -->
+    <string name="dialog_title">插入链接</string>
+    <string name="dialog_edit_hint">http(s)://</string>
+    <string name="dialog_button_ok">OK</string>
+    <string name="dialog_button_cancel">Cancel</string>
+
+    <!-- Toast -->
+    <string name="toast_bold">Bold</string>
+    <string name="toast_italic">Italic</string>
+    <string name="toast_underline">Underline</string>
+    <string name="toast_strikethrough">Strikethrough</string>
+    <string name="toast_bullet">Bullet</string>
+    <string name="toast_quote">Quote</string>
+    <string name="toast_insert_link">Insert link</string>
+    <string name="toast_format_clear">Format clear</string>
+</resources>
