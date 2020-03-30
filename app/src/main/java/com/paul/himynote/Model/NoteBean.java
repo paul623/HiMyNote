@@ -1,9 +1,12 @@
 package com.paul.himynote.Model;
 
+import android.graphics.Color;
+
 import com.paul.himynote.Tools.DateUtils;
 
 import org.litepal.crud.LitePalSupport;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
@@ -12,14 +15,16 @@ import java.util.Objects;
  * 2020年3月25日19:10:57
  * Author Paul
  * */
-public class NoteBean extends LitePalSupport {
+public class NoteBean extends LitePalSupport implements Serializable {
     //事件标题
     private String title;
+    //是否为过期事件
+    private boolean flag;
     //事件主题
     private String theme;
     private int theme_number;
     //事件颜色
-    private int color;
+    private int colorID;
     //事件内容
     private String content;
     //事件日期
@@ -28,6 +33,7 @@ public class NoteBean extends LitePalSupport {
     private String finishDate;
     //事件结束日期
     private String endDate;
+    private String color;
 
     public String getTitle() {
         return title;
@@ -53,11 +59,11 @@ public class NoteBean extends LitePalSupport {
         this.theme_number = theme_number;
     }
 
-    public int getColor() {
+    public String getColor() {
         return color;
     }
 
-    public void setColor(int color) {
+    public void setColor(String color) {
         this.color = color;
     }
 
@@ -93,18 +99,28 @@ public class NoteBean extends LitePalSupport {
         this.endDate = endDate;
     }
 
-    @Override
-    public String toString() {
-        return "NoteBean{" +
-                "title='" + title + '\'' +
-                ", theme='" + theme + '\'' +
-                ", theme_number=" + theme_number +
-                ", color='" + color + '\'' +
-                ", content='" + content + '\'' +
-                ", addDate='" + addDate + '\'' +
-                ", finishDate='" + finishDate + '\'' +
-                ", endDate='" + endDate + '\'' +
-                '}';
+    public boolean isFlag() {
+        return flag;
+    }
+
+    public void setFlag(boolean flag) {
+        this.flag = flag;
+    }
+
+    public int getColorID() {
+        if(colorID==0){
+            return Color.parseColor(color);
+        }
+        return colorID;
+    }
+
+    public void setColorID(int colorID) {
+        this.colorID = colorID;
+    }
+
+    public NoteBean() {
+        addDate= DateUtils.getCurDate();
+        flag=false;
     }
 
     @Override
@@ -112,22 +128,36 @@ public class NoteBean extends LitePalSupport {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         NoteBean noteBean = (NoteBean) o;
-        return theme_number == noteBean.theme_number &&
+        return flag == noteBean.flag &&
+                theme_number == noteBean.theme_number &&
+                colorID == noteBean.colorID &&
                 Objects.equals(title, noteBean.title) &&
                 Objects.equals(theme, noteBean.theme) &&
-                Objects.equals(color, noteBean.color) &&
                 Objects.equals(content, noteBean.content) &&
                 Objects.equals(addDate, noteBean.addDate) &&
                 Objects.equals(finishDate, noteBean.finishDate) &&
-                Objects.equals(endDate, noteBean.endDate);
+                Objects.equals(endDate, noteBean.endDate) &&
+                Objects.equals(color, noteBean.color);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(title, theme, theme_number, color, content, addDate, finishDate, endDate);
+        return Objects.hash(title, flag, theme, theme_number, colorID, content, addDate, finishDate, endDate, color);
     }
 
-    public NoteBean() {
-        addDate= DateUtils.getCurDate();
+    @Override
+    public String toString() {
+        return "NoteBean{" +
+                "title='" + title + '\'' +
+                ", flag=" + flag +
+                ", theme='" + theme + '\'' +
+                ", theme_number=" + theme_number +
+                ", colorID=" + colorID +
+                ", content='" + content + '\'' +
+                ", addDate='" + addDate + '\'' +
+                ", finishDate='" + finishDate + '\'' +
+                ", endDate='" + endDate + '\'' +
+                ", color='" + color + '\'' +
+                '}';
     }
 }

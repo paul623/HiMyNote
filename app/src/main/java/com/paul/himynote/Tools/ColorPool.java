@@ -7,14 +7,16 @@ import java.util.Random;
 
 public class ColorPool {
     public static final String[] COURSE_BACKGROUND_COLOR={"#FAEBD7","#FFE4C4","#D1EEEE","#FFEC8B","#B3EE3A","#7FFF00","#FFD700","#FF6A6A","#FFA500","#EE82EE","#FF4040","#D8BFD8","#BFEFFF"};
-    public static final String[] LIGHT_COLOUR={"#FFFFFF","#CCFF99","#99CCFF","#99CCCC","#CCFF99","#CCFF99","#FFFFCC","#FF9966","#FF6666","#CCFF99","#CCCCFF","#CCFF00","#CC3399","#FF6600"};
-    public static final int[] LIGHT_COLOUR_INT={Color.parseColor("#FFFFFF"),Color.parseColor("#CCFF99"),
-            Color.parseColor("#99CCFF"),Color.parseColor("#99CCCC"),
-            Color.parseColor("#CCFF99"),Color.parseColor("#CCFF99"),
-            Color.parseColor("#FFFFCC"),Color.parseColor("#FF9966"),
-            Color.parseColor("#FF6666"),Color.parseColor("#CCFF99"),
-            Color.parseColor("#CCCCFF"),Color.parseColor("#CCFF00"),
-            Color.parseColor("#CC3399"),Color.parseColor("#FF6600")};
+    public static final String[] LIGHT_COLOUR={"#FFFFCC","#CCFFFF","#FF9966",
+            "#FF6666","#FFCCCC","#FFCC99","#CCFF99","#CCFFCC","#CCCC99","#0099FF",
+            "#F5F5F5","#FF9933","#FF99CC","#FF6600"};
+    public static final int[] LIGHT_COLOUR_INT={Color.parseColor("#FFFFCC"),Color.parseColor("#CCFFFF"),
+            Color.parseColor("#FF9966"),Color.parseColor("#FF6666"),
+            Color.parseColor("#FFCCCC"),Color.parseColor("#FFCC99"),
+            Color.parseColor("#CCFF99"),Color.parseColor("#CCFFCC"),
+            Color.parseColor("#CCCC99"),Color.parseColor("#0099FF"),
+            Color.parseColor("#F5F5F5"),Color.parseColor("#FF9933"),
+            Color.parseColor("#FF99CC"),Color.parseColor("#FF6600")};
     public static String getColor(){
         Date date=new Date();
         Random random=new Random(date.getTime());

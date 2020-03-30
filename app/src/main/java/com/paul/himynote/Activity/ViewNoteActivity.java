@@ -59,7 +59,7 @@ public class ViewNoteActivity extends BaseActivity {
             clock=clock+"~"+noteBean.getEndDate();
         }
         tv_clock.setText(clock);
-        ColorDrawable drawable=new ColorDrawable(noteBean.getColor());
+        ColorDrawable drawable=new ColorDrawable(noteBean.getColorID());
         toolbar.setLeftIcon(drawable);
         toolbar.setLeftString(noteBean.getTitle());
         toolbar.setRightBottomString(noteBean.getTheme());

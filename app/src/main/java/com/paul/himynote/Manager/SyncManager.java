@@ -58,6 +58,7 @@ public class SyncManager {
         //自己规定一种数据格式，这里面我采用的是json
         Gson gson=new Gson();
         String jsons=gson.toJson(counterEvents);
+        Log.d("测试","产生的json："+jsons);
         //把要上传的数据转成byte数组
         byte[] data=jsons.getBytes();
         try {
@@ -125,7 +126,7 @@ public class SyncManager {
         sardine.setCredentials(userName,password);//登录。设置账号
         try {
             //拿到输入流
-            InputStream inputStream=sardine.get(serverHostUrl+"pickTime/backup.txt");
+            InputStream inputStream=sardine.get(serverHostUrl+"HiMyNotes/backup.txt");
             //设置输入缓冲区
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8)); // 实例化输入流，并获取网页代
             String s; // 依次循环，至到读的值为空
@@ -136,6 +137,7 @@ public class SyncManager {
             reader.close();
 
             String str = sb.toString();
+            Log.d("测试","拿到得json:"+str);
             Gson gson=new Gson();
             List<NoteBean> list=gson.fromJson(str,new TypeToken<List<NoteBean>>() {}.getType());
             LitePal.initialize(context);
@@ -151,6 +153,8 @@ public class SyncManager {
                 counterEvent.setFinishDate(new_counterEvent.getFinishDate());
                 counterEvent.setTheme_number(new_counterEvent.getTheme_number());
                 counterEvent.setColor(new_counterEvent.getColor());
+                counterEvent.setColorID(new_counterEvent.getColorID());
+                counterEvent.setFlag(new_counterEvent.isFlag());
                 counterEvent.save();
             }
             Message message=new Message();

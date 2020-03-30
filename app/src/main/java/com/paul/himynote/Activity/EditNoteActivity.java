@@ -77,7 +77,7 @@ public class EditNoteActivity extends BaseActivity {
             noteBean=(NoteBean)parameter.get("data");
             noteBean= NoteBeanManager.getRealNoteBean(noteBean);
             toolbar.setCenterString("编辑笔记");
-            ColorDrawable drawable=new ColorDrawable(noteBean.getColor());
+            ColorDrawable drawable=new ColorDrawable(noteBean.getColorID());
             stv_edit_color.setLeftIcon(drawable);
             stv_edit_clock.setCenterString(noteBean.getAddDate()+"~"+noteBean.getEndDate());
             et_edit_content.setText(noteBean.getContent());
@@ -86,7 +86,9 @@ public class EditNoteActivity extends BaseActivity {
             btn_edit_delete.setVisibility(View.VISIBLE);
         }else {
             noteBean=new NoteBean();
-            noteBean.setColor(Color.parseColor(ColorPool.getColor()));
+            noteBean.setColorID(Color.parseColor(ColorPool.getColor()));
+            ColorDrawable drawable=new ColorDrawable(noteBean.getColorID());
+            stv_edit_color.setLeftIcon(drawable);
             stv_edit_clock.setCenterString(noteBean.getAddDate()+"~"+"请设置截止日期");
             btn_edit_delete.setVisibility(View.GONE);
         }
@@ -150,11 +152,11 @@ public class EditNoteActivity extends BaseActivity {
                 ColorPickerDialog colorPickerDialog=new ColorPickerDialog(me,ColorPool.LIGHT_COLOUR_INT)
                         .setDismissAfterClick(false)
                         .setTitle("选择颜色")
-                        .setCheckedColor(noteBean.getColor())
+                        .setCheckedColor(noteBean.getColorID())
                         .setOnColorChangedListener(new OnColorChangedListener() {
                             @Override
                             public void onColorChanged(int color) {
-                                noteBean.setColor(color);
+                                noteBean.setColorID(color);
                                 ColorDrawable drawable=new ColorDrawable(color);
                                 stv_edit_color.setLeftIcon(drawable);
                             }

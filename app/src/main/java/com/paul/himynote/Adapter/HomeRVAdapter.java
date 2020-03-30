@@ -80,7 +80,7 @@ public class HomeRVAdapter extends RecyclerView.Adapter<HomeRVAdapter.ViewHolder
         holder.tv_content.setText(noteBean.getContent());
         holder.tv_clock.setText(noteBean.getAddDate());
         holder.tv_theme.setText(noteBean.getTheme());
-        holder.cv_main.setCardBackgroundColor(noteBean.getColor());
+        holder.cv_main.setCardBackgroundColor(noteBean.getColorID());
         holder.cv_main.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

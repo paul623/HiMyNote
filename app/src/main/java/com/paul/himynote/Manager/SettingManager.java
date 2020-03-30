@@ -89,6 +89,9 @@ public class SettingManager {
     }
 
     public boolean canSync() {
+        username=sp.getString(str_username,"");
+        userServer=sp.getString(str_server,"");
+        password=sp.getString(str_password,"");
         if(userServer.equals("")||username.equals("")||password.equals("")){
             return false;
         }
