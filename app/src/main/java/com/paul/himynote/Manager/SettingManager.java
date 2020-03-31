@@ -21,6 +21,13 @@ public class SettingManager {
     String username;
     String password;
     String userServer;
+    //用户名设置
+    private String str_head_username="str_head_username";
+    private String head_username;
+
+    //头像
+    private String str_headicon_path="str_headicon_path";
+    private String headicon_path;
 
 
     public String getBg_path() {
@@ -53,6 +60,8 @@ public class SettingManager {
         username=sp.getString(str_username,"");
         userServer=sp.getString(str_server,"");
         password=sp.getString(str_password,"");
+        head_username=sp.getString(str_head_username,"Little Prince");
+        headicon_path=sp.getString(str_headicon_path,"");
     }
 
     public String getUsername() {
@@ -96,5 +105,25 @@ public class SettingManager {
             return false;
         }
         return true;
+    }
+
+    public String getHead_username() {
+        return head_username;
+    }
+
+    public void setHead_username(String head_username) {
+        this.head_username = head_username;
+        editor.putString(str_head_username,head_username);
+        editor.apply();
+    }
+
+    public String getHeadicon_path() {
+        return headicon_path;
+    }
+
+    public void setHeadicon_path(String headicon_path) {
+        this.headicon_path = headicon_path;
+        editor.putString(str_headicon_path,headicon_path);
+        editor.apply();
     }
 }

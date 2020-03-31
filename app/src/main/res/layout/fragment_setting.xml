@@ -6,11 +6,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
        <com.allen.library.SuperTextView
           android:padding="15dp"
+           android:id="@+id/stv_mine_headbar"
           app:sBackgroundDrawableRes="@color/white"
            app:sDividerLineHeight="0dp"
            app:sDividerLineColor="@color/white"
            app:sRightTextString="巴塞罗那的余晖"
-           app:sRightBottomTextString="尊享用户VIP9"
            app:sRightTextSize="25sp"
            android:layout_gravity="center"
            app:sLeftIconShowCircle="true"

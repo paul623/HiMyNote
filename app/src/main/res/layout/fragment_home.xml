@@ -27,7 +27,7 @@
                 app:sRightIconHeight="50dp"
                 app:sRightIconWidth="50dp"
                 app:sRightIconRes="@mipmap/icons8_add"
-                app:sRightBottomTextString="今日阳光正好~"
+                app:sRightBottomTextString="随便写点什么吧~"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
         </LinearLayout>

@@ -16,6 +16,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <com.allen.library.SuperTextView
+                app:sRightIconRes="@drawable/ic_edit"
+                app:sRightIconHeight="30dp"
+                app:sRightIconWidth="30dp"
                 app:sDividerLineColor="@color/white"
                 app:sDividerLineHeight="0dp"
                 android:id="@+id/stv_view_toolbar"

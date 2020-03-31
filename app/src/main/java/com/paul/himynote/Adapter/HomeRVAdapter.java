@@ -35,6 +35,14 @@ public class HomeRVAdapter extends RecyclerView.Adapter<HomeRVAdapter.ViewHolder
     private onItemClickListener clickListener;
     private ScaleInAnimation mSelectAnimation = new ScaleInAnimation();
 
+    public List<NoteBean> getList() {
+        return noteBeans;
+    }
+
+    public void setList(List<NoteBean> noteBeans) {
+        this.noteBeans=noteBeans;
+    }
+
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         View noteView;
@@ -87,13 +95,13 @@ public class HomeRVAdapter extends RecyclerView.Adapter<HomeRVAdapter.ViewHolder
                 clickListener.onClick(noteBean);
             }
         });
-        holder.cv_main.setOnLongClickListener(new View.OnLongClickListener() {
+        /*holder.cv_main.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 clickListener.onLongClick(noteBean);
-                return false;
+                return true;
             }
-        });
+        });*/
         holder.cv_main.setAlpha(new SettingManager(holder.cv_main.getContext()).getAlpha_number());
     }
 

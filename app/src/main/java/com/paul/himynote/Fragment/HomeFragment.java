@@ -1,13 +1,16 @@
 package com.paul.himynote.Fragment;
 
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 
 import android.os.Handler;
 import android.os.Message;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 
@@ -18,6 +21,7 @@ import android.widget.LinearLayout;
 
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
@@ -42,6 +46,11 @@ import com.scwang.smart.refresh.header.ClassicsHeader;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Collections;
+import java.util.List;
 
 import es.dmoral.toasty.Toasty;
 
@@ -93,10 +102,19 @@ public class HomeFragment extends BaseFragment<MainActivity> {
     @Override
     public void initDatas() {
         settingManager=new SettingManager(me);
+        List<NoteBean> noteBeans=NoteBeanManager.getAll();
+        noteBeans.add(NoteBeanManager.getDefaultNotes(me));
         homeRVAdapter=new HomeRVAdapter(NoteBeanManager.getAll(), new HomeRVAdapter.onItemClickListener() {
             @Override
             public void onClick(NoteBean noteBean) {
-                jump(ViewNoteActivity.class,new JumpParameter().put("data",noteBean));
+                jump(ViewNoteActivity.class,new JumpParameter().put("data",noteBean),new OnJumpResponseListener() {
+                    @Override
+                    public void OnResponse(JumpParameter jumpParameter) {
+                        if(jumpParameter.get("result")!=null&&(boolean)jumpParameter.get("result")){
+                            homeRVAdapter.refreash(NoteBeanManager.getAll());
+                        }
+                    }
+                });
             }
 
             @Override
@@ -117,6 +135,7 @@ public class HomeFragment extends BaseFragment<MainActivity> {
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
         recyclerView.setAdapter(homeRVAdapter);
         linearLayout.setBackground(ImageHelper.getByPrivatePath(me,settingManager.getBg_path()));
+
         setRefreshLayout();
     }
 
@@ -158,7 +177,19 @@ public class HomeFragment extends BaseFragment<MainActivity> {
         Canvas canvas = new Canvas(bitmap);
         canvas.drawColor(Color.WHITE);
         rootView.draw(canvas);
-        Toasty.success(me,"生成地址:"+ImageHelper.compressImage(me,bitmap).getAbsolutePath(),Toasty.LENGTH_SHORT).show();
+        File file=ImageHelper.compressImage(me,bitmap);
+        Toasty.success(me,"生成地址:"+file.getAbsolutePath(),Toasty.LENGTH_SHORT).show();
+        try {
+            MediaStore.Images.Media.insertImage(me.getContentResolver(), file.getAbsolutePath(), "星月记"+file.getName(), null);
+            Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+            Uri uri = Uri.fromFile(file);
+            intent.setData(uri);
+            me.sendBroadcast(intent);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+
     }
     public void updateBG(String path){
         linearLayout.setBackground(ImageHelper.getByPrivatePath(me,path));
@@ -178,6 +209,45 @@ public class HomeFragment extends BaseFragment<MainActivity> {
 
             }
         });
+        BindRV();
+    }
+    private void BindRV(){
+        //为RecycleView绑定触摸事件
+        ItemTouchHelper helper = new ItemTouchHelper(new ItemTouchHelper.Callback() {
+            @Override
+            public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+                //首先回调的方法 返回int表示是否监听该方向
+                int dragFlags =  ItemTouchHelper.LEFT |ItemTouchHelper.RIGHT |ItemTouchHelper.UP|ItemTouchHelper.DOWN;//拖拽
+                int swipeFlags = ItemTouchHelper.LEFT|ItemTouchHelper.RIGHT;//侧滑删除
+                return makeMovementFlags(dragFlags,swipeFlags);
+            }
 
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                //滑动事件
+                List<NoteBean> noteBeans=homeRVAdapter.getList();
+                Collections.swap(noteBeans,viewHolder.getAdapterPosition(),target.getAdapterPosition());
+                homeRVAdapter.setList(noteBeans);
+                homeRVAdapter.notifyItemMoved(viewHolder.getAdapterPosition(),target.getAdapterPosition());
+                NoteBeanManager.saveAll(noteBeans);
+                return false;
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                //侧滑事件
+                homeRVAdapter.getList().get(viewHolder.getAdapterPosition()).delete();
+                homeRVAdapter.getList().remove(viewHolder.getAdapterPosition());
+                homeRVAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
+                Toasty.success(me,"删除成功！",Toasty.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public boolean isLongPressDragEnabled() {
+                //是否可拖拽
+                return true;
+            }
+        });
+        helper.attachToRecyclerView(recyclerView);
     }
 }

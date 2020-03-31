@@ -6,9 +6,9 @@ android {
 
     defaultConfig {
         applicationId "com.paul.himynote"
-        minSdkVersion 26
+        minSdkVersion 24
         targetSdkVersion 29
-        versionCode 4
+        versionCode 1
         versionName "0.0.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -20,7 +20,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 
 }
 
@@ -59,5 +62,6 @@ dependencies {
     //下拉刷新
     implementation  'com.scwang.smart:refresh-layout-kernel:2.0.0-alpha-1'      //核心必须依赖
     implementation  'com.scwang.smart:refresh-header-classics:2.0.0-alpha-1'
+    implementation 'com.afollestad.material-dialogs:input:3.3.0'
 
 }

@@ -2,6 +2,7 @@ package com.paul.himynote.Model;
 
 import android.graphics.Color;
 
+import com.paul.himynote.Tools.ColorPool;
 import com.paul.himynote.Tools.DateUtils;
 
 import org.litepal.crud.LitePalSupport;
@@ -35,12 +36,19 @@ public class NoteBean extends LitePalSupport implements Serializable {
     private String endDate;
     private String color;
 
+
+
     public String getTitle() {
         return title;
     }
 
     public void setTitle(String title) {
-        this.title = title;
+        if(title==null||title.equals("")){
+            this.title="星月记";
+        }else {
+            this.title = title;
+        }
+
     }
 
     public String getTheme() {
@@ -64,6 +72,9 @@ public class NoteBean extends LitePalSupport implements Serializable {
     }
 
     public void setColor(String color) {
+        if(color!=null&&!color.equals("")){
+            colorID=Color.parseColor(color);
+        }
         this.color = color;
     }
 
@@ -109,6 +120,9 @@ public class NoteBean extends LitePalSupport implements Serializable {
 
     public int getColorID() {
         if(colorID==0){
+            if(color==null||color.equals("")){
+                setColor(ColorPool.getColor());
+            }
             return Color.parseColor(color);
         }
         return colorID;
@@ -160,4 +174,6 @@ public class NoteBean extends LitePalSupport implements Serializable {
                 ", color='" + color + '\'' +
                 '}';
     }
+
+
 }

@@ -117,7 +117,7 @@
             android:id="@+id/et_edit_content"
             android:layout_marginTop="20dp"
             android:background="@null"
-            android:hint="在这里写点什么吧\n你个大猪头！"
+            android:hint="在这里写点什么吧\n点击主题颜色即可设置颜色\n日期目前没啥太多的作用\n主题一定要填写"
             android:inputType="textMultiLine"
             android:gravity="top"
             android:layout_width="match_parent"

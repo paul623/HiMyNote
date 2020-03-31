@@ -2,22 +2,26 @@ package com.paul.himynote.Fragment;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
+import android.text.InputType;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.SeekBar;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.allen.library.SuperTextView;
-import com.google.gson.internal.$Gson$Preconditions;
 import com.kongzue.baseframework.BaseFragment;
 import com.kongzue.baseframework.interfaces.BindView;
 import com.kongzue.baseframework.interfaces.Layout;
@@ -26,7 +30,7 @@ import com.paul.himynote.Manager.SettingManager;
 import com.paul.himynote.Manager.SyncManager;
 import com.paul.himynote.R;
 import com.paul.himynote.Tools.ImageHelper;
-import com.thegrizzlylabs.sardineandroid.model.SupportedReport;
+import com.paul.himynote.View.EditDialog;
 
 import es.dmoral.toasty.Toasty;
 
@@ -43,6 +47,8 @@ public class MineFragment extends BaseFragment<MainActivity> {
     SuperTextView stv_mine_push;
     @BindView(R.id.sb_mine_alpha)
     SeekBar seekBar;
+    @BindView(R.id.stv_mine_headbar)
+    SuperTextView headbar;
     SettingManager settingManager;
     private Handler handler=new Handler(new Handler.Callback() {
         @Override
@@ -79,10 +85,46 @@ public class MineFragment extends BaseFragment<MainActivity> {
         settingManager=new SettingManager(me);
         int seek_number= (int) (settingManager.getAlpha_number()*10);
         seekBar.setProgress(seek_number);
+        headbar.setRightString(settingManager.getHead_username());
+        if(settingManager.getHeadicon_path().equals("")){
+            headbar.setLeftIcon(me.getDrawable(R.drawable.ic_head));
+        }else {
+            headbar.setLeftIcon(ImageHelper.getByPrivatePath(me,settingManager.getHeadicon_path()));
+        }
+
     }
 
     @Override
     public void setEvents() {
+        headbar.setRightTextGroupClickListener(new SuperTextView.OnRightTextGroupClickListener() {
+            @Override
+            public void onClickListener(View view) {
+                EditDialog editDialog = new EditDialog(me);
+                editDialog.show();
+                editDialog.setOnPosNegClickListener(new EditDialog.OnPosNegClickListener() {
+                    @Override
+                    public void posClickListener(String value) {
+                       headbar.setRightString(value);
+                       Toasty.success(me,"设置成功",Toasty.LENGTH_SHORT).show();
+                       settingManager.setHead_username(value);
+                    }
+
+                    @Override
+                    public void negCliclListener() {
+
+                    }
+                });
+
+            }
+        });
+        headbar.setLeftImageViewClickListener(new SuperTextView.OnLeftImageViewClickListener() {
+            @Override
+            public void onClickListener(ImageView imageView) {
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setType("image/*");
+                startActivityForResult(intent, 3);
+            }
+        });
         stv_mine_bg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -147,10 +189,21 @@ public class MineFragment extends BaseFragment<MainActivity> {
                 Uri originalUri = data.getData(); // 获得图片的uri
                 String path= ImageHelper.getPrivatePath(me,originalUri);
                 if(path!=null&&!path.equals("")){
-                    Toasty.success(me,"设置成功，重启生效",Toasty.LENGTH_SHORT).show();
+                    Toasty.success(me,"设置成功",Toasty.LENGTH_SHORT).show();
                     ImageHelper.updtaeBackground(settingManager.getBg_path());
                     settingManager.setBg_path(path);
                     bgChangedListener.setBG(path);
+                }
+            }
+        }else if(requestCode==3){
+            if(data!=null) {
+                Uri originalUri = data.getData(); // 获得图片的uri
+                String path = ImageHelper.getPrivatePath(me, originalUri);
+                if (path != null && !path.equals("")) {
+                    Toasty.success(me, "设置成功", Toasty.LENGTH_SHORT).show();
+                    ImageHelper.updtaeBackground(settingManager.getHeadicon_path());
+                    settingManager.setHeadicon_path(path);
+                    headbar.setLeftIcon(ImageHelper.getByPrivatePath(me,path));
                 }
             }
         }
@@ -212,4 +265,6 @@ public class MineFragment extends BaseFragment<MainActivity> {
         dialog.show();
 
     }
+
+
 }

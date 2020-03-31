@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.allen.library.SuperTextView;
@@ -17,6 +18,8 @@ import com.kongzue.baseframework.interfaces.BindView;
 import com.kongzue.baseframework.interfaces.Layout;
 import com.kongzue.baseframework.interfaces.SwipeBack;
 import com.kongzue.baseframework.util.JumpParameter;
+import com.kongzue.baseframework.util.OnJumpResponseListener;
+import com.paul.himynote.Manager.NoteBeanManager;
 import com.paul.himynote.Model.NoteBean;
 import com.paul.himynote.R;
 
@@ -63,6 +66,23 @@ public class ViewNoteActivity extends BaseActivity {
         toolbar.setLeftIcon(drawable);
         toolbar.setLeftString(noteBean.getTitle());
         toolbar.setRightBottomString(noteBean.getTheme());
+        toolbar.setRightImageViewClickListener(new SuperTextView.OnRightImageViewClickListener() {
+            @Override
+            public void onClickListener(ImageView imageView) {
+                JumpParameter jumpParameter=new JumpParameter();
+                jumpParameter.put("data",noteBean);
+                jumpParameter.put("flag",true);
+                jump(EditNoteActivity.class, jumpParameter, new OnJumpResponseListener() {
+                    @Override
+                    public void OnResponse(JumpParameter jumpParameter) {
+                        if(jumpParameter.get("result")!=null&&(boolean)jumpParameter.get("result")){
+                            setResponse(new JumpParameter().put("result",true));
+                            finish();
+                        }
+                    }
+                });
+            }
+        });
     }
 
     @Override
