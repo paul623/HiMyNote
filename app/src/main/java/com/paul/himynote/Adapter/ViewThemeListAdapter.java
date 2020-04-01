@@ -51,6 +51,7 @@ public class ViewThemeListAdapter extends BaseAdapter {
         TextView tv_day = view.findViewById(R.id.tv_theme_day);
         TextView tv_date = view.findViewById(R.id.tv_theme_enddtae);
         NoteBean noteBean = noteBeans.get(position);
+        tv_content.setTextSize(18f);
         cardView.setCardBackgroundColor(noteBean.getColorID());
         tv_content.setText(noteBean.getContent());
         tv_date.setText(noteBean.getEndDate());

@@ -90,8 +90,8 @@ public class TagFragment extends BaseFragment<MainActivity> {
                         if(jumpParameter.get("result")!=null&&(boolean)jumpParameter.get("result")){
                             dataSetHasChangedLisener.dataChanged();
                             adapter.refresh();
+                            dialog.dismiss();
                         }
-                        dialog.dismiss();
                     }
                 });
             }
