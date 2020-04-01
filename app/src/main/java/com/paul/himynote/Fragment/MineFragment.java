@@ -1,12 +1,16 @@
 package com.paul.himynote.Fragment;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
 import android.text.InputType;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +18,7 @@ import android.view.Window;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -49,6 +54,8 @@ public class MineFragment extends BaseFragment<MainActivity> {
     SeekBar seekBar;
     @BindView(R.id.stv_mine_headbar)
     SuperTextView headbar;
+    @BindView(R.id.stv_mine_about)
+    SuperTextView stv_mine_about;
     SettingManager settingManager;
     private Handler handler=new Handler(new Handler.Callback() {
         @Override
@@ -180,6 +187,12 @@ public class MineFragment extends BaseFragment<MainActivity> {
                 }
             }
         });
+        stv_mine_about.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showAboutMeDialog();
+            }
+        });
     }
 
     @Override
@@ -266,5 +279,61 @@ public class MineFragment extends BaseFragment<MainActivity> {
 
     }
 
+    private void showAboutMeDialog() {
+        //1、使用Dialog、设置style
+        final Dialog dialog = new Dialog(me,R.style.DialogTheme);
+        //2、设置布局
+        View view = View.inflate(me,R.layout.activity_about_me,null);
+        dialog.setContentView(view);
 
+        Window window = dialog.getWindow();
+        //设置弹出位置
+        window.setGravity(Gravity.BOTTOM);
+        //设置弹出动画
+        window.setWindowAnimations(R.style.main_menu_animStyle);
+        //设置对话框大小
+        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+        //BindView
+        TextView textView =dialog.findViewById(R.id.tv_version);
+        textView.setText("拾光 v"+ getAppVersionName(me));
+        dialog.findViewById(R.id.tv_cancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    String qq="mqqwpa://im/chat?chat_type=wpa&uin=" + "2499761614";//跳转QQ
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(qq)));
+                } catch (Exception e) {
+                    Toasty.error(me, "请检查是否安装QQ！", Toast.LENGTH_SHORT).show();
+                }
+                dialog.dismiss();
+            }
+        });
+        dialog.findViewById(R.id.tv_confirm).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String shareURL="https://www.yuque.com/docs/share/45829fb8-9586-4971-909b-aa12cf640d7e?#";
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_VIEW);//为Intent设置动作
+                intent.setData(Uri.parse(shareURL));//为Intent设置数据
+                startActivity(intent);//将Intent传递给Activity
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+
+
+
+    }
+    public static String getAppVersionName(Context context) {
+        String appVersionName = "";
+        try {
+            PackageInfo packageInfo = context.getApplicationContext()
+                    .getPackageManager()
+                    .getPackageInfo(context.getPackageName(), 0);
+            appVersionName = packageInfo.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            Log.e("", e.getMessage());
+        }
+        return appVersionName;
+    }
 }

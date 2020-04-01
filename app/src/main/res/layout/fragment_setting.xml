@@ -24,7 +24,28 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="60dp">
+            <TextView
+                android:textColor="@color/black"
+                android:textSize="21sp"
+                android:gravity="center"
+                android:text="透明度"
+                android:layout_weight="3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+            <SeekBar
+                android:id="@+id/sb_mine_alpha"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:maxHeight="2dp"
+                android:max="10"
+                android:progress="1"
+                android:thumb="@drawable/seek_bar_thumb"/>
+        </LinearLayout>
         <com.allen.library.SuperTextView
             android:id="@+id/stv_mine_account"
             app:sLeftTextSize="20sp"
@@ -61,28 +82,16 @@
             app:sLeftTextString="背景设置"
             android:layout_width="match_parent"
             android:layout_height="60dp"/>
-        <LinearLayout
-            android:orientation="horizontal"
+
+        <com.allen.library.SuperTextView
+            android:id="@+id/stv_mine_about"
+            app:sLeftTextSize="20sp"
+            app:sRightIconWidth="24dp"
+            app:sRightIconHeight="24dp"
+            app:sRightIconRes="@drawable/ic_right"
+            app:sLeftTextString="关于"
             android:layout_width="match_parent"
-            android:layout_height="60dp">
-            <TextView
-                android:textColor="@color/black"
-                android:textSize="21sp"
-                android:gravity="center"
-                android:text="透明度"
-                android:layout_weight="3"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-            <SeekBar
-                android:id="@+id/sb_mine_alpha"
-                android:layout_weight="1"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:maxHeight="2dp"
-                android:max="10"
-                android:progress="1"
-                android:thumb="@drawable/seek_bar_thumb"/>
-        </LinearLayout>
+            android:layout_height="60dp"/>
     </LinearLayout>
 
 
