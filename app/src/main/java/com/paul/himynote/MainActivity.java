@@ -25,6 +25,7 @@ import com.kongzue.tabbar.TabBarView;
 import com.kongzue.tabbar.interfaces.OnTabChangeListener;
 import com.paul.himynote.Fragment.HomeFragment;
 import com.paul.himynote.Fragment.MineFragment;
+import com.paul.himynote.Fragment.TagFragment;
 import com.paul.himynote.Manager.NoteBeanManager;
 import com.paul.himynote.Model.NoteBean;
 
@@ -44,6 +45,7 @@ public class MainActivity extends BaseActivity {
 
     private HomeFragment homeFragment=new HomeFragment();
     private MineFragment mineFragment=new MineFragment();
+    private TagFragment tagFragment=new TagFragment();
     @Override
     public void initViews() {
         LitePal.initialize(me);
@@ -60,7 +62,9 @@ public class MainActivity extends BaseActivity {
     public void initDatas(JumpParameter parameter) {
         List<Tab> tabs = new ArrayList<>();
         tabs.add(new Tab(this, "主页", R.drawable.ic_home));
+        tabs.add(new Tab(this,"统计",R.drawable.ic_tag));
         tabs.add(new Tab(this, "设置", R.drawable.ic_setting));
+
         tabbar.setTab(tabs);
     }
 
@@ -95,6 +99,18 @@ public class MainActivity extends BaseActivity {
                 homeFragment.homeRVAdapter.refreash(NoteBeanManager.getAll());
             }
         });
+        homeFragment.setDataChanagedListener(new HomeFragment.DataChanagedListener() {
+            @Override
+            public void dataChanaged() {
+                tagFragment.refreshData();
+            }
+        });
+        tagFragment.setDataSetHasChangedLisener(new TagFragment.DataSetHasChangedLisener() {
+            @Override
+            public void dataChanged() {
+                homeFragment.homeRVAdapter.refreash(NoteBeanManager.getAll());
+            }
+        });
     }
     private void checkPermission() {
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
@@ -107,6 +123,7 @@ public class MainActivity extends BaseActivity {
     @Override
     public void initFragment(FragmentChangeUtil fragmentChangeUtil) {
         fragmentChangeUtil.addFragment(homeFragment);
+        fragmentChangeUtil.addFragment(tagFragment);
         fragmentChangeUtil.addFragment(mineFragment);
         changeFragment(0);
     }

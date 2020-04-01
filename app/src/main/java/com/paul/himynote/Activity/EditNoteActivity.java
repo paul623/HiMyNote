@@ -33,6 +33,8 @@ import com.paul.himynote.R;
 import com.paul.himynote.Tools.ColorPool;
 import com.paul.himynote.Tools.DateUtils;
 
+import java.util.Date;
+
 import es.dmoral.toasty.Toasty;
 
 
@@ -141,6 +143,9 @@ public class EditNoteActivity extends BaseActivity {
                         results=results+dayOfMonth;
                         noteBean.setEndDate(results);
                         stv_edit_clock.setCenterString(noteBean.getAddDate()+"~"+noteBean.getEndDate());
+                        if(DateUtils.countDayToInt(DateUtils.getCurDate(),noteBean.getEndDate())<0){
+                            Toasty.info(me,"不推荐设置以前的日期哦~",Toasty.LENGTH_SHORT).show();
+                        }
                     }
                 },Integer.parseInt(dates[0]),Integer.parseInt(dates[1])-1,Integer.parseInt(dates[2]));
                 datePickerDialog.show();

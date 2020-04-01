@@ -87,6 +87,7 @@ public class HomeFragment extends BaseFragment<MainActivity> {
             return false;
         }
     });
+    private DataChanagedListener dataChanagedListener;
     @Override
     public void initViews() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
@@ -112,6 +113,7 @@ public class HomeFragment extends BaseFragment<MainActivity> {
                     public void OnResponse(JumpParameter jumpParameter) {
                         if(jumpParameter.get("result")!=null&&(boolean)jumpParameter.get("result")){
                             homeRVAdapter.refreash(NoteBeanManager.getAll());
+                            dataChanagedListener.dataChanaged();
                         }
                     }
                 });
@@ -127,6 +129,7 @@ public class HomeFragment extends BaseFragment<MainActivity> {
                     public void OnResponse(JumpParameter jumpParameter) {
                         if(jumpParameter.get("result")!=null&&(boolean)jumpParameter.get("result")){
                             homeRVAdapter.refreash(NoteBeanManager.getAll());
+                            dataChanagedListener.dataChanaged();
                         }
                     }
                 });
@@ -151,6 +154,7 @@ public class HomeFragment extends BaseFragment<MainActivity> {
                     public void OnResponse(JumpParameter jumpParameter) {
                         if(jumpParameter.get("result")!=null&&(boolean)jumpParameter.get("result")){
                             homeRVAdapter.refreash(NoteBeanManager.getAll());
+                            dataChanagedListener.dataChanaged();
                         }
                     }
                 });
@@ -239,6 +243,7 @@ public class HomeFragment extends BaseFragment<MainActivity> {
                 homeRVAdapter.getList().get(viewHolder.getAdapterPosition()).delete();
                 homeRVAdapter.getList().remove(viewHolder.getAdapterPosition());
                 homeRVAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
+                dataChanagedListener.dataChanaged();
                 Toasty.success(me,"删除成功！",Toasty.LENGTH_SHORT).show();
             }
 
@@ -249,5 +254,11 @@ public class HomeFragment extends BaseFragment<MainActivity> {
             }
         });
         helper.attachToRecyclerView(recyclerView);
+    }
+    public interface DataChanagedListener{
+        public void dataChanaged();
+    }
+    public void setDataChanagedListener(DataChanagedListener listener){
+        dataChanagedListener=listener;
     }
 }

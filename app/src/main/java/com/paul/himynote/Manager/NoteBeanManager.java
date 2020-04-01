@@ -3,6 +3,7 @@ package com.paul.himynote.Manager;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.paul.himynote.Model.KindsBean;
 import com.paul.himynote.Model.NoteBean;
 import com.paul.himynote.Tools.ColorPool;
 import com.paul.himynote.Tools.DateUtils;
@@ -10,6 +11,7 @@ import com.paul.himynote.Tools.DateUtils;
 import org.litepal.LitePal;
 import org.litepal.crud.LitePalSupport;
 
+import java.nio.file.WatchEvent;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -38,21 +40,7 @@ public class NoteBeanManager {
 
         return new ArrayList<>(hashSet);
     }
-    /**
-     * 计算两个日期之间的差值
-     * B-A
-     * */
-    public static long countDayToInt(String dateA,String dateB){
-        Calendar a = Calendar.getInstance(),
-                b = Calendar.getInstance();
-        String[] splitdate = dateA.split("-");
-        a.set(Integer.parseInt(splitdate[0]), Integer.parseInt(splitdate[1]) - 1, Integer.parseInt(splitdate[2]));
-        String[] splitdateB = dateB.split("-");
-        b.set(Integer.parseInt(splitdateB[0]), Integer.parseInt(splitdateB[1]) - 1, Integer.parseInt(splitdateB[2]));
-        long diffDays = (b.getTimeInMillis() - a.getTimeInMillis())
-                / (1000 * 60 * 60 * 24);
-        return diffDays;
-    }
+
     public static void saveAll(List<NoteBean> noteBeans){
         LitePal.deleteAll(NoteBean.class);
         for(NoteBean i:noteBeans){
@@ -88,5 +76,18 @@ public class NoteBeanManager {
         }else {
             return null;
         }
+    }
+
+    /**
+     * 获取类别
+     * */
+    public static List<KindsBean> getKinds(){
+        List<KindsBean> kindsBeans=new ArrayList<>();
+        List<String> names=getThemesName();
+        for(String i:names){
+            List<NoteBean> noteBeans=LitePal.where("theme = ?",i).find(NoteBean.class);
+            kindsBeans.add(new KindsBean(noteBeans));
+        }
+        return kindsBeans;
     }
 }

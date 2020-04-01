@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.appcompat.widget.Toolbar
+        android:background="@color/white"
+        app:contentInsetLeft="0dp"
+        app:contentInsetStart="0dp"
+        android:fitsSystemWindows="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <com.allen.library.SuperTextView
+                app:sDividerLineColor="@color/white"
+                app:sDividerLineHeight="0dp"
+                android:id="@+id/stv_toolbar"
+                app:sUseRipple="false"
+                app:sLeftTextString="@string/app_name"
+                android:layout_marginEnd="5dp"
+                app:sLeftTextSize="30sp"
+                app:sRightIconHeight="50dp"
+                app:sRightIconWidth="50dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </LinearLayout>
+    </androidx.appcompat.widget.Toolbar>
+    <ListView
+        android:padding="10dp"
+        android:divider="@null"
+        android:dividerHeight="0dp"
+        android:id="@+id/lv_tag_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</LinearLayout>
