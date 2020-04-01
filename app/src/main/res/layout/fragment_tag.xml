@@ -30,6 +30,7 @@
         </LinearLayout>
     </androidx.appcompat.widget.Toolbar>
     <ListView
+        android:layoutAnimation="@anim/anim_listview_item"
         android:padding="10dp"
         android:divider="@null"
         android:dividerHeight="10dp"
