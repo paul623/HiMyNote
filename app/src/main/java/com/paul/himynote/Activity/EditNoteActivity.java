@@ -111,9 +111,14 @@ public class EditNoteActivity extends BaseActivity {
         toolbar.setRightImageViewClickListener(new SuperTextView.OnRightImageViewClickListener() {
             @Override
             public void onClickListener(ImageView imageView) {
+                if(noteBean.getEndDate()==null||noteBean.getEndDate().equals("")){
+                    Toasty.info(me,"结束时间已默认设置为当前日期",Toasty.LENGTH_SHORT).show();
+                    noteBean.setEndDate(DateUtils.getCurDate());
+                }
                 noteBean.setTitle(et_edit_title.getText().toString());
                 noteBean.setContent(et_edit_content.getText().toString());
                 noteBean.setTheme(et_edit_theme.getText().toString());
+
                 boolean result=noteBean.save();
                 if(result){
                     Toasty.success(me,"保存成功！",Toasty.LENGTH_SHORT).show();
