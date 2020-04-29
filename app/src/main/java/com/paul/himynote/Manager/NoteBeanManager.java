@@ -37,7 +37,6 @@ public class NoteBeanManager {
         for(NoteBean i:noteBeans){
             hashSet.add(i.getTheme());
         }
-
         return new ArrayList<>(hashSet);
     }
 

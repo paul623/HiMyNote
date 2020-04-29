@@ -295,7 +295,7 @@ public class MineFragment extends BaseFragment<MainActivity> {
         window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
         //BindView
         TextView textView =dialog.findViewById(R.id.tv_version);
-        textView.setText("拾光 v"+ getAppVersionName(me));
+        textView.setText("星月记 v"+ getAppVersionName(me));
         dialog.findViewById(R.id.tv_cancel).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

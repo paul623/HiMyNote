@@ -28,6 +28,7 @@ import com.kongzue.baseframework.interfaces.BindView;
 import com.kongzue.baseframework.interfaces.Layout;
 import com.kongzue.baseframework.util.JumpParameter;
 import com.paul.himynote.Manager.NoteBeanManager;
+import com.paul.himynote.Manager.TagManager;
 import com.paul.himynote.Model.NoteBean;
 import com.paul.himynote.R;
 import com.paul.himynote.Tools.ColorPool;
@@ -58,6 +59,7 @@ public class EditNoteActivity extends BaseActivity {
     @BindView(R.id.et_edit_content)
     EditText et_edit_content;
 
+    TagManager tagManager;
 
     @Override
     public void initViews() {
@@ -73,8 +75,9 @@ public class EditNoteActivity extends BaseActivity {
 
     @Override
     public void initDatas(JumpParameter parameter) {
+        tagManager=new TagManager(me);
         editable=(boolean)parameter.get("flag");
-        et_edit_theme.setAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_dropdown_item_1line ,NoteBeanManager.getThemesName()));
+        et_edit_theme.setAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_dropdown_item_1line ,tagManager.getThemesName()));
         if(editable){
             noteBean=(NoteBean)parameter.get("data");
             noteBean= NoteBeanManager.getRealNoteBean(noteBean);
@@ -121,6 +124,7 @@ public class EditNoteActivity extends BaseActivity {
 
                 boolean result=noteBean.save();
                 if(result){
+                    tagManager.saveTagBean(noteBean);
                     Toasty.success(me,"保存成功！",Toasty.LENGTH_SHORT).show();
                 }else {
                     Toasty.error(me,"保存失败！",Toasty.LENGTH_SHORT).show();
@@ -136,7 +140,6 @@ public class EditNoteActivity extends BaseActivity {
                 DatePickerDialog datePickerDialog=new DatePickerDialog(me, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        Log.d("测试",year+" "+month+" "+dayOfMonth);
                         String results=year+"-";
                         if(month<10){
                             results=results+"0";
@@ -178,6 +181,7 @@ public class EditNoteActivity extends BaseActivity {
         btn_edit_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                tagManager.removeTagBean(noteBean);
                 int result=noteBean.delete();
                 if(result==1){
                     Toasty.success(me,"删除成功！",Toasty.LENGTH_SHORT).show();

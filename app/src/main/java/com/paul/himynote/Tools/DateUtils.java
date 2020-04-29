@@ -29,7 +29,6 @@ public class DateUtils {
     public static long countDayToInt(String dateA, String dateB){
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             return ChronoUnit.DAYS.between(LocalDate.parse(dateA),LocalDate.parse(dateB));
-
         }else {
             String[] splitdate = dateA.split("-");
             String[] splitdateB = dateB.split("-");

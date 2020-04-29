@@ -37,6 +37,7 @@ import com.paul.himynote.MainActivity;
 import com.paul.himynote.Manager.NoteBeanManager;
 import com.paul.himynote.Manager.SettingManager;
 import com.paul.himynote.Manager.SyncManager;
+import com.paul.himynote.Manager.TagManager;
 import com.paul.himynote.Manager.WordsManager;
 import com.paul.himynote.Model.NoteBean;
 import com.paul.himynote.R;
@@ -67,6 +68,7 @@ public class HomeFragment extends BaseFragment<MainActivity> {
     String str_words;
 
     public HomeRVAdapter homeRVAdapter;
+    public TagManager tagManager;
     SettingManager settingManager;
     Handler handler=new Handler(new Handler.Callback() {
         @Override
@@ -102,6 +104,7 @@ public class HomeFragment extends BaseFragment<MainActivity> {
 
     @Override
     public void initDatas() {
+        tagManager=new TagManager(me);
         settingManager=new SettingManager(me);
         List<NoteBean> noteBeans=NoteBeanManager.getAll();
         noteBeans.add(NoteBeanManager.getDefaultNotes(me));
@@ -240,7 +243,9 @@ public class HomeFragment extends BaseFragment<MainActivity> {
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
                 //侧滑事件
-                homeRVAdapter.getList().get(viewHolder.getAdapterPosition()).delete();
+                NoteBean noteBean=homeRVAdapter.getList().get(viewHolder.getAdapterPosition());
+                tagManager.removeTagBean(noteBean);
+                noteBean.delete();
                 homeRVAdapter.getList().remove(viewHolder.getAdapterPosition());
                 homeRVAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
                 dataChanagedListener.dataChanaged();

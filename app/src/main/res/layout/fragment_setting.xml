@@ -21,6 +21,8 @@
            app:sLeftIconWidth="100dp"/>
     <LinearLayout
         android:layout_margin="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">

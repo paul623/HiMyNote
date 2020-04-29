@@ -19,9 +19,11 @@ public class KindsBean {
     public KindsBean(List<NoteBean> data) {
         this.data = data;
         number=data.size();
-        theme=data.get(0).getTheme();
-        nearCountDay= DateUtils.getMinDays(data);
-        color=data.get(0).getColorID();
+        if(number!=0){
+            theme=data.get(0).getTheme();
+            nearCountDay= DateUtils.getMinDays(data);
+            color=data.get(0).getColorID();
+        }
     }
 
     public int getNumber() {
