@@ -12,17 +12,17 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true"
         android:windowSoftInputMode="adjustResize|stateHidden">
-        <activity android:name=".LoginActivity"></activity>
-        <activity android:name=".SplashActivity" />
-        <activity android:name=".Activity.ViewNoteActivity" />
-        <activity android:name=".Activity.EditNoteActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".SplashActivity" />
+        <activity android:name=".Activity.ViewNoteActivity" />
+        <activity android:name=".Activity.EditNoteActivity" />
+        <activity android:name=".MainActivity"></activity>
     </application>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
