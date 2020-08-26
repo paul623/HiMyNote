@@ -8,8 +8,8 @@ android {
         applicationId "com.paul.himynote"
         minSdkVersion 24
         targetSdkVersion 29
-        versionCode 4
-        versionName "0.0.4"
+        versionCode 5
+        versionName "0.0.4.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -45,7 +45,7 @@ dependencies {
     implementation 'com.github.lygttpod:SuperTextView:2.4.2'
 
     //WebDav
-    implementation 'com.thegrizzlylabs.sardine-android:sardine-android:0.5'
+    implementation 'com.thegrizzlylabs.sardine-android:sardine-android:0.7'
     //GSON
     implementation 'com.google.code.gson:gson:2.8.6'
     //Toasty
